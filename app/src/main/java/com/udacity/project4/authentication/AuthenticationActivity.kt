@@ -25,6 +25,7 @@ import com.udacity.project4.locationreminders.RemindersActivity
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthenticationBinding
+    private val viewModel : LogInViewModel by viewModels()
 
 
     companion object {
@@ -43,15 +44,15 @@ class AuthenticationActivity : AppCompatActivity() {
         }
 
         // TODO: If the user was authenticated, send him to RemindersActivity
-//        viewModel.authenticationState.observe(view, Observer {authenticationState ->
-//            when(authenticationState){
-//                LogInViewModel.AuthenticationState.AUTHENTICATED -> startActivity(Intent(this,RemindersActivity::class.java))
-//                else -> {
-//                    Log.e( TAG, "Unauthenticated $authenticationState" )
-//                    launchSignInFlow()
-//                }
-//            }
-//        })
+        viewModel.authenticationState.observe( this, Observer {authenticationState ->
+            when(authenticationState){
+                LogInViewModel.AuthenticationState.AUTHENTICATED -> startActivity(Intent(this,RemindersActivity::class.java))
+                else -> {
+                    Log.e( TAG, "Unauthenticated $authenticationState" )
+                    launchSignInFlow()
+                }
+            }
+        })
         // TODO: a bonus is to customize the sign in flow to look nice using :
         //https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#custom-layout
     }
